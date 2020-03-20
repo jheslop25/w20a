@@ -1915,6 +1915,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -1928,12 +1929,14 @@ __webpack_require__.r(__webpack_exports__);
 
       ajax.onreadystatechange = function () {
         if (ajax.status == 200 && ajax.readyState == 4) {
-          var jsonData = JSON.parse(this.responseText);
-          comp.users = jsonData.users;
+          var jsonData = this.responseText.replace("\'", '"');
+          var jsonObj = JSON.parse(jsonData);
+          comp.users = JSON.parse(jsonObj);
+          console.log(jsonObj);
         }
       };
 
-      ajax.open('GET', 'http://http://35.223.188.43:8080/get-users', true);
+      ajax.open("GET", "/get-users", true);
       ajax.send();
     }
   }
@@ -37319,7 +37322,9 @@ var render = function() {
       _vm._v(" "),
       _vm._l(_vm.users, function(user) {
         return _c("h3", { key: user.id }, [_vm._v(_vm._s(user.name))])
-      })
+      }),
+      _vm._v(" "),
+      _c("p")
     ],
     2
   )
